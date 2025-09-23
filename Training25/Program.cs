@@ -11,21 +11,32 @@ internal class Program {
       do {
          Console.Write ("\nNumber Conversion Game\n~~~~~~~~~~~~~~~~~~~~~~\nInput: ");
          if (int.TryParse (Console.ReadLine (), out int decValue)) {
-            var bin = Convert.ToString (decValue, 2);
-            Console.WriteLine ($"HEX: {decValue:X}\nBinary: {bin}");
+            string bin = Convert.ToString (decValue, 2), hex = decValue.ToString ("X");
+            Console.WriteLine ($"HEX: {hex}\nBinary: {bin}");
             Console.WriteLine (DecToBin (decValue) == bin ? "DecToBin() method works!"
                : "DecToBin() method fails!");
-         } else
-            Console.WriteLine ("Invalid Input!");
+            Console.WriteLine (DecToHex (decValue) == hex ? "DecToHex() method works!"
+               : "DecToHex() method fails!");
+         } else Console.WriteLine ("Invalid Input!");
          Console.Write ("Press 'Y' to continue: ");
       } while (Console.ReadLine () is "Y" or "y");
    }
 
+   /// <summary>Returns the binary value of the given decimal number</summary>
    static string DecToBin (int decValue) {
       if (decValue == 0) return "0";
-      char[] bits = new char[32];
+      char[] bin = new char[32];
       for (int i = 31; i >= 0; i--)
-         bits[31 - i] = ((decValue & (1 << i)) != 0) ? '1' : '0';
-      return new string (bits);
+         bin[31 - i] = ((decValue & (1 << i)) != 0) ? '1' : '0';
+      return new string (bin).TrimStart ('0');
+   }
+
+   /// <summary>Returns the hexadecimal value of the given decimal number</summary>
+   static string DecToHex (int decValue) {
+      if (decValue == 0) return "0";
+      char[] hexChars = "0123456789ABCDEF".ToCharArray (), hex = new char[8];
+      for (int i = 7; i >= 0; i--)
+         hex[7 - i] = hexChars[(decValue >> (i * 4)) & 0xF];
+      return new string (hex).TrimStart ('0');
    }
 }
