@@ -5,14 +5,17 @@
 // Program.cs
 // Program to convert a given decimal number to different forms (Hexadecimal, Binary)
 // ------------------------------------------------------------------------------------------------
+using System.Text;
+
 namespace Training25;
+
 internal class Program {
    static void Main (string[] args) {
       do {
-         Console.Write ("\nNumber Conversion Game\n~~~~~~~~~~~~~~~~~~~~~~\nInput: ");
+         Console.Write ("\nNumber Conversion Game\n~~~~~~~~~~~~~~~~~~~~~~\nInput : ");
          if (int.TryParse (Console.ReadLine (), out int decValue)) {
             string bin = Convert.ToString (decValue, 2), hex = decValue.ToString ("X");
-            Console.WriteLine ($"HEX: {hex}\nBinary: {bin}");
+            Console.WriteLine ($"HEX   : {hex}\nBinary: {bin}");
             Console.WriteLine (DecToBin (decValue) == bin ? "DecToBin() method works!"
                : "DecToBin() method fails!");
             Console.WriteLine (DecToHex (decValue) == hex ? "DecToHex() method works!"
@@ -25,10 +28,10 @@ internal class Program {
    /// <summary>Returns the binary value of the given decimal number</summary>
    static string DecToBin (int decValue) {
       if (decValue == 0) return "0";
-      char[] bin = new char[32];
+      var bin = new StringBuilder (32);
       for (int i = 31; i >= 0; i--)
-         bin[31 - i] = ((decValue & (1 << i)) != 0) ? '1' : '0';
-      return new string (bin).TrimStart ('0');
+         bin.Append (((decValue & (1 << i)) != 0) ? '1' : '0');
+      return bin.ToString ().TrimStart ('0');
    }
 
    /// <summary>Returns the hexadecimal value of the given decimal number</summary>
