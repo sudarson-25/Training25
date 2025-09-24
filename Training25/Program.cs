@@ -8,6 +8,7 @@
 using System.Text;
 
 namespace Training25;
+
 internal class Program {
    static void Main (string[] args) {
       do {
@@ -16,7 +17,7 @@ internal class Program {
          if (int.TryParse (Console.ReadLine (), out int choice))
             switch (choice) {
                case 1:
-                  Console.Write ("Enter the number: ");
+                  Console.Write ("Enter the number : ");
                   if (int.TryParse (Console.ReadLine (), out int num)) {
                      string numInWords = NumberToWords (num);
                      Console.WriteLine ($"\n{num} - {char.ToUpper (numInWords[0]) +
@@ -24,7 +25,7 @@ internal class Program {
                   } else Console.WriteLine ("\nInvalid Input!");
                   break;
                case 2:
-                  Console.Write ("Enter the number: ");
+                  Console.Write ("Enter the number : ");
                   // Roman numerals are usually written for numbers from 1 to 3999
                   if (int.TryParse (Console.ReadLine (), out int num1) && num1 > 0 && num1 < 4000)
                      Console.WriteLine ($"\n{num1} - {NumberToRoman (num1)}");
@@ -36,6 +37,13 @@ internal class Program {
       } while (Console.ReadLine () is "y" or "Y");
    }
 
+   static (int, string)[] valuesMap = [(1000000000, " billion "), (1000000, " million "),
+         (1000, " thousand "), (100, " hundred ")];
+   static string[] unitsMap = [ "", "one", "two", "three", "four", "five", "six", "seven",
+            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen",
+         "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
+         "fifty", "sixty", "seventy", "eighty", "ninety" ];
+
    /// <summary>Returns the given integer in words</summary>
    static string NumberToWords (int num) {
       string numInWords = "";
@@ -44,24 +52,16 @@ internal class Program {
       if (num == int.MinValue)
          return numInWords += NumberToWords (int.MaxValue / 10 * 10) + "-" + NumberToWords (8);
       int absNum = Math.Abs (num);
-      (int, string)[] valueMap = [(1000000000, " billion "), (1000000, " million "),
-         (1000, " thousand "), (100, " hundred ")];
-      foreach (var (value, label) in valueMap)
+      foreach (var (value, label) in valuesMap)
          if (absNum / value > 0) {
             numInWords += NumberToWords (absNum / value) + label;
             absNum %= value;
          }
-      if (absNum > 0) {
-         if (numInWords != "") numInWords += "and ";
-         string[] unitsMap = [ "", "one", "two", "three", "four", "five", "six", "seven",
-            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen",
-         "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
-         "fifty", "sixty", "seventy", "eighty", "ninety" ];
-         if (absNum < 20) numInWords += unitsMap[absNum];
-         else {
-            numInWords += tensMap[absNum / 10];
-            if (absNum % 10 > 0) numInWords += "-" + unitsMap[absNum % 10];
-         }
+      if (num > 0 && numInWords != "") numInWords += "and ";
+      if (absNum < 20) numInWords += unitsMap[absNum];
+      else {
+         numInWords += tensMap[absNum / 10];
+         if (absNum % 10 > 0) numInWords += "-" + unitsMap[absNum % 10];
       }
       return numInWords.TrimEnd ();
    }
