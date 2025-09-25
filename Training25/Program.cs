@@ -26,7 +26,7 @@ internal class Program {
       } while (Console.ReadLine () is "y" or "Y");
    }
 
-   ///// <summary>Returns the GCD of the two given integers</summary>
+   /// <summary>Returns the GCD of the two given integers</summary>
    static int GCD (int num, int num1) {
       num = Math.Abs (num);
       num1 = Math.Abs (num1);
