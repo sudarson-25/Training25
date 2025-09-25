@@ -37,13 +37,6 @@ internal class Program {
       } while (Console.ReadLine () is "y" or "Y");
    }
 
-   static (int, string)[] valuesMap = [(1000000000, " billion "), (1000000, " million "),
-         (1000, " thousand "), (100, " hundred ")];
-   static string[] unitsMap = [ "", "one", "two", "three", "four", "five", "six", "seven",
-            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen",
-         "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
-         "fifty", "sixty", "seventy", "eighty", "ninety" ];
-
    /// <summary>Returns the given integer in words</summary>
    static string NumberToWords (int num) {
       string numInWords = "";
@@ -52,30 +45,37 @@ internal class Program {
       if (num == int.MinValue)
          return numInWords += NumberToWords (int.MaxValue / 10 * 10) + "-" + NumberToWords (8);
       int absNum = Math.Abs (num);
-      foreach (var (value, label) in valuesMap)
+      foreach (var (value, label) in sValuesMap)
          if (absNum / value > 0) {
             numInWords += NumberToWords (absNum / value) + label;
             absNum %= value;
          }
       if (num > 0 && numInWords != "") numInWords += "and ";
-      if (absNum < 20) numInWords += unitsMap[absNum];
+      if (absNum < 20) numInWords += sUnitsMap[absNum];
       else {
          numInWords += tensMap[absNum / 10];
-         if (absNum % 10 > 0) numInWords += "-" + unitsMap[absNum % 10];
+         if (absNum % 10 > 0) numInWords += "-" + sUnitsMap[absNum % 10];
       }
       return numInWords.TrimEnd ();
    }
 
    /// <summary>Returns the roman numeral of the given integer</summary>
    static string NumberToRoman (int number) {
-      (int, string)[] numerals = [ (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"),
-         (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I") ];
       var result = new StringBuilder ();
-      foreach (var (value, symbol) in numerals)
+      foreach (var (value, symbol) in sNumerals)
          while (number >= value) {
             result.Append (symbol);
             number -= value;
          }
       return result.ToString ();
    }
+
+   static (int, string)[] sValuesMap = [(1000000000, " billion "), (1000000, " million "),
+      (1000, " thousand "), (100, " hundred ")], sNumerals = [ (1000, "M"), (900, "CM"),
+         (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"),
+         (9, "IX"), (5, "V"), (4, "IV"), (1, "I") ];
+   static string[] sUnitsMap = [ "", "one", "two", "three", "four", "five", "six", "seven",
+            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen",
+         "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
+         "fifty", "sixty", "seventy", "eighty", "ninety" ];
 }
