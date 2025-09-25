@@ -28,18 +28,33 @@ internal class Program {
    /// <summary>Returns the binary value of the given decimal number</summary>
    static string DecToBin (int decValue) {
       if (decValue == 0) return "0";
-      var bin = new StringBuilder (32);
-      for (int i = 31; i >= 0; i--)
-         bin.Append (((decValue & (1 << i)) != 0) ? '1' : '0');
-      return bin.ToString ().TrimStart ('0');
+      var sbBin = new StringBuilder (32);
+      int cap = sbBin.Capacity;
+      for (int i = cap - 1; i >= 0; i--)
+         sbBin.Append (((decValue & (1 << i)) != 0) ? '1' : '0');
+      string bin = sbBin.ToString ();
+      for (int i = 0; i < cap; i++)
+         if (bin[i] != '0') {
+            bin = bin[i..];
+            break;
+         }
+      return bin;
    }
 
    /// <summary>Returns the hexadecimal value of the given decimal number</summary>
    static string DecToHex (int decValue) {
       if (decValue == 0) return "0";
-      char[] hexChars = "0123456789ABCDEF".ToCharArray (), hex = new char[8];
-      for (int i = 7; i >= 0; i--)
-         hex[7 - i] = hexChars[(decValue >> (i * 4)) & 0xF];
-      return new string (hex).TrimStart ('0');
+      char[] hexChars = "0123456789ABCDEF".ToCharArray ();
+      var sbHex = new StringBuilder ("00000000");
+      int len = sbHex.Length;
+      for (int i = len - 1; i >= 0; i--)
+         sbHex[len - 1 - i] = hexChars[(decValue >> (i * 4)) & 0xF];
+      string hex = sbHex.ToString ();
+      for (int i = 0; i < len; i++)
+         if (hex[i] != '0') {
+            hex = hex[i..];
+            break;
+         }
+      return hex;
    }
 }
