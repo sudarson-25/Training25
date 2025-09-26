@@ -11,9 +11,8 @@ internal class Program {
    static void Main (string[] args) {
       do {
          Console.Write ("\nDigital Root\n~~~~~~~~~~~~\nEnter a number: ");
-         if (int.TryParse (Console.ReadLine (), out int num)) {
-            Console.WriteLine (num < 0 ? "Digital root is undifined!" : DigitalRoot (num));
-         } else Console.WriteLine ("Invalid input!");
+         Console.WriteLine (int.TryParse (Console.ReadLine (), out int num) ?
+            (num < 0 ? "Digital root is undifined!" : DigitalRoot (num)) : "Invalid input!");
          Console.Write ("Press 'Y' to continue: ");
       } while (Console.ReadLine () is "y" or "Y");
    }
