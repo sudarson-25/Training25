@@ -66,7 +66,7 @@ internal class Program {
             result += symbol;
             number -= value;
          }
-      return result.ToString ();
+      return result;
    }
 
    static (int, string)[] sValuesMap = [(1000000000, " billion "), (1000000, " million "),
