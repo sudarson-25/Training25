@@ -5,15 +5,13 @@
 // Program.cs
 // Program to display a given number in words and roman numerals
 // ------------------------------------------------------------------------------------------------
-using System.Text;
-
 namespace Training25;
 
 internal class Program {
    static void Main (string[] args) {
       do {
-         Console.Write ("\nMenu\n~~~~~\n1.Display in words\n2.Display in roman numerals (0<x<4000)" +
-            "\nEnter your choice: ");
+         Console.Write ("\nMenu\n~~~~~\n1.Display in words\n2.Display in roman numerals (0<x<400" +
+            "0)\nEnter your choice: ");
          if (int.TryParse (Console.ReadLine (), out int choice))
             switch (choice) {
                case 1:
@@ -54,17 +52,18 @@ internal class Program {
       if (absNum < 20) numInWords += sUnitsMap[absNum];
       else {
          numInWords += tensMap[absNum / 10];
-         if (absNum % 10 > 0) numInWords += "-" + sUnitsMap[absNum % 10];
+         int digit = absNum % 10;
+         if (digit > 0) numInWords += "-" + sUnitsMap[digit];
       }
       return numInWords.TrimEnd ();
    }
 
    /// <summary>Returns the roman numeral of the given integer</summary>
    static string NumberToRoman (int number) {
-      var result = new StringBuilder ();
+      string result = "";
       foreach (var (value, symbol) in sNumerals)
          while (number >= value) {
-            result.Append (symbol);
+            result += symbol;
             number -= value;
          }
       return result.ToString ();
@@ -75,7 +74,7 @@ internal class Program {
          (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"),
          (9, "IX"), (5, "V"), (4, "IV"), (1, "I") ];
    static string[] sUnitsMap = [ "", "one", "two", "three", "four", "five", "six", "seven",
-            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen",
-         "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
+            "eight", "nine", "ten", "eleven", "twelve", "thirteen","fourteen", "fifteen", "sixteen"
+      , "seventeen", "eighteen", "nineteen" ], tensMap = [ "", "", "twenty", "thirty", "forty",
          "fifty", "sixty", "seventy", "eighty", "ninety" ];
 }
