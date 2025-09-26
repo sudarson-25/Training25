@@ -39,12 +39,14 @@ internal class Program {
    /// <summary>Returns the hexadecimal value of the given decimal number</summary>
    static string DecToHex (int decValue) {
       if (decValue == 0) return "0";
-      char[] hexChars = "0123456789ABCDEF".ToCharArray ();
       var sb = new StringBuilder ("00000000");
       for (int i = 7; i >= 0; i--)
-         sb[7 - i] = hexChars[(decValue >> (i * 4)) & 0xF];
+         sb[7 - i] = sHexChars[(decValue >> (i * 4)) & 0xF];
       int idx = 0;
       while (sb[idx] == '0') idx++;
       return sb.ToString (idx, 8 - idx);
    }
+
+   static char[] sHexChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+      'E', 'F'];
 }
