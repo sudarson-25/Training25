@@ -6,16 +6,15 @@
 // Program to display the chess board
 // ------------------------------------------------------------------------------------------------
 using System.Text;
+using static System.Console;
 
 namespace Training25;
-
-using static System.Console;
 
 internal class Program {
    static void Main () {
       OutputEncoding = new UnicodeEncoding ();
-      string[] whitePieces = { "♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖" }, blackPieces = { "♜",
-         "♞", "♝", "♛", "♚", "♝", "♞", "♜" };
+      string[] whitePieces = ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"], blackPieces = [ "♜",
+         "♞", "♝", "♛", "♚", "♝", "♞", "♜" ];
       WriteLine ("┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓");
       int start = 0, end = 8;
       for (int row = start; row < end; row++) {
