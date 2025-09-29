@@ -8,16 +8,22 @@
 namespace Training25;
 
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       do {
          Console.Write ("\nLCM and GCD Generator\n~~~~~~~~~~~~~~~~~~~~~\n" +
             "Enter the first number : ");
-         if (int.TryParse (Console.ReadLine (), out int num) && num != int.MinValue) {
+         if (int.TryParse (Console.ReadLine (), out int num)) {
             Console.Write ("Enter the second number: ");
-            Console.WriteLine (int.TryParse (Console.ReadLine (), out int num1) &&
-               num1 != int.MinValue ? num == 0 && num1 == 0 ? "GCD and LCM are undefined when " +
-               "both the inputs are 0" : $"GCD                    : {GCD (num, num1)}\nLCM      " +
-               $"              : {LCM (num, num1)}" : "Second number is invalid");
+            if (int.TryParse (Console.ReadLine (), out int num1))
+               try {
+                  Console.WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM      " +
+                  $"              : {LCM (num, num1)}");
+               } catch (ArgumentOutOfRangeException ex) {
+                  Console.WriteLine ($"Error: {ex.Message}");
+               } catch (ArgumentException ex) {
+                  Console.WriteLine ($"Error: {ex.Message}");
+               }
+            else Console.WriteLine ("Second number is invalid");
          } else Console.WriteLine ("First number is invalid!");
          Console.Write ("Press 'Y' to continue  : ");
       } while (Console.ReadLine () is "y" or "Y");
@@ -25,7 +31,13 @@ internal class Program {
 
    /// <summary>Returns the GCD of the two given integers</summary>
    static int GCD (int num, int num1) {
-      num = Math.Abs (num);
+      if (num == int.MinValue)
+         throw new ArgumentOutOfRangeException (nameof (num), "int.MinValue is not supported!");
+      if (num1 == int.MinValue)
+         throw new ArgumentOutOfRangeException (nameof (num1), "int.MinValue is not supported!");
+      if (num == 0 && num1 == 0)
+         throw new ArgumentException ("Both the inputs can't be zero", $"{nameof (num)}, {nameof (num1)}");
+      num = Math.Abs (num); // GCD and LCM are always positive
       num1 = Math.Abs (num1);
       int temp;
       while (num1 != 0) {
