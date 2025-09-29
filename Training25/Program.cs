@@ -26,7 +26,7 @@ internal class Program {
       } while (ReadLine () is "Y" or "y");
    }
 
-   /// <summary>Returns the binary value of the given decimal number</summary>
+   // Returns the binary value of the given decimal number
    static string DecToBin (int decValue) {
       if (decValue == 0) return "0";
       var sb = new StringBuilder (32);
@@ -35,7 +35,7 @@ internal class Program {
       return TrimLeadingZeros (sb, 32);
    }
 
-   /// <summary>Returns the hexadecimal value of the given decimal number</summary>
+   // Returns the hexadecimal value of the given decimal number
    static string DecToHex (int decValue) {
       if (decValue == 0) return "0";
       var sb = new StringBuilder ("00000000");
@@ -44,6 +44,7 @@ internal class Program {
       return TrimLeadingZeros (sb, 8);
    }
 
+   // Returns a string after trimming leading zeros
    static string TrimLeadingZeros (StringBuilder sb, int size) {
       int idx = 0;
       while (sb[idx] == '0') idx++;
