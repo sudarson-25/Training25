@@ -10,10 +10,10 @@ using System.Text;
 namespace Training25;
 
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       Console.OutputEncoding = new UnicodeEncoding ();
-      string[] whitePieces = { "♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖" }, blackPieces = { "♜", "♞",
-         "♝", "♛", "♚", "♝", "♞", "♜" };
+      string[] whitePieces = { "♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖" }, blackPieces = { "♜",
+         "♞", "♝", "♛", "♚", "♝", "♞", "♜" };
       Console.WriteLine ("┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓");
       for (int row = 0; row < 8; row++) {
          Console.Write ("┃");
