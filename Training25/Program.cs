@@ -9,15 +9,18 @@ using System.Text;
 
 namespace Training25;
 
+using static System.Console;
+
 internal class Program {
    static void Main () {
-      Console.OutputEncoding = new UnicodeEncoding ();
+      OutputEncoding = new UnicodeEncoding ();
       string[] whitePieces = { "♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖" }, blackPieces = { "♜",
          "♞", "♝", "♛", "♚", "♝", "♞", "♜" };
-      Console.WriteLine ("┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓");
-      for (int row = 0; row < 8; row++) {
-         Console.Write ("┃");
-         for (int col = 0; col < 8; col++) {
+      WriteLine ("┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓");
+      int start = 0, end = 8;
+      for (int row = start; row < end; row++) {
+         Write ("┃");
+         for (int col = start; col < end; col++) {
             string piece = row switch {
                0 => blackPieces[col],
                1 => "♟",
@@ -25,11 +28,11 @@ internal class Program {
                7 => whitePieces[col],
                _ => " ",
             };
-            Console.Write ($" {piece}  ┃");
+            Write ($" {piece}  ┃");
          }
          if (row < 7)
-            Console.WriteLine ("\n┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫");
+            WriteLine ("\n┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫");
       }
-      Console.WriteLine ("\n┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛");
+      WriteLine ("\n┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛");
    }
 }
