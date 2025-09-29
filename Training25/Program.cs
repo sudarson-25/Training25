@@ -5,31 +5,33 @@
 // Program.cs
 // Program to calculate the GCD and LCM and display the result
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 
 internal class Program {
    static void Main () {
       do {
-         Console.Write ("\nLCM and GCD Generator\n~~~~~~~~~~~~~~~~~~~~~\n" +
+         Write ("\nLCM and GCD Generator\n~~~~~~~~~~~~~~~~~~~~~\n" +
             "Enter the first number : ");
-         if (int.TryParse (Console.ReadLine (), out int num)) {
-            Console.Write ("Enter the second number: ");
-            if (int.TryParse (Console.ReadLine (), out int num1))
+         if (int.TryParse (ReadLine (), out int num)) {
+            Write ("Enter the second number: ");
+            if (int.TryParse (ReadLine (), out int num1))
                try {
-                  Console.WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM      " +
+                  WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM      " +
                   $"              : {LCM (num, num1)}");
                } catch (ArgumentOutOfRangeException ex) {
-                  Console.WriteLine ($"Error: {ex.Message}");
+                  PrintError (ex.Message);
                } catch (ArgumentException ex) {
-                  Console.WriteLine ($"Error: {ex.Message}");
+                  PrintError (ex.Message);
                }
-            else Console.WriteLine ("Second number is invalid");
-         } else Console.WriteLine ("First number is invalid!");
-         Console.Write ("Press 'Y' to continue  : ");
-      } while (Console.ReadLine () is "y" or "Y");
+            else WriteLine ("Second number is invalid");
+         } else WriteLine ("First number is invalid!");
+         Write ("Press 'Y' to continue  : ");
+      } while (ReadLine () is "y" or "Y");
    }
 
-   /// <summary>Returns the GCD of the two given integers</summary>
+   // Returns the GCD of the two given integers
    static int GCD (int num, int num1) {
       if (num == int.MinValue)
          throw new ArgumentOutOfRangeException (nameof (num), "int.MinValue is not supported!");
@@ -48,6 +50,9 @@ internal class Program {
       return num;
    }
 
-   /// <summary>Returns the LCM of the two given integers</summary>
+   // Returns the LCM of the two given integers
    static long LCM (int num, int num1) => (long)Math.Abs (num) * Math.Abs (num1) / GCD (num, num1);
+
+   // Prints the error message
+   static void PrintError (string msg) => WriteLine ($"Error: {msg}");
 }
