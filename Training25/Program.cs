@@ -6,27 +6,18 @@
 // Program to find the digital root of a given number.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
-
 namespace Training25;
 
 internal class Program {
    static void Main () {
       do {
          Write ("\nDigital Root\n~~~~~~~~~~~~\nEnter a number: ");
-         if (int.TryParse (ReadLine (), out int num)) {
-            if (Validate (num)) WriteLine ($"Digital Root  : {DigitalRoot (num)}");
-         } else WriteLine ("Invalid input!");
+         WriteLine (int.TryParse (ReadLine (), out int num) ? num < 0 ? "Digital root is " +
+            "undefined!" : $"Digital Root  : {DigitalRoot (num)}" : "Invalid input!");
          Write ("Press 'Y' to continue: ");
       } while (ReadLine () is "y" or "Y");
-   }
 
-   static int DigitalRoot (int num) {
-      if (num == 0) return 0;
-      return 1 + (num - 1) % 9;
-   }
-
-   static bool Validate (int num) {
-      if (num < 0) { WriteLine ("Digital root is undefined!"); return false; }
-      return true;
+      // Returns the digital root of the given integer.
+      static int DigitalRoot (int num) => num == 0 ? 0 : 1 + (num - 1) % 9;
    }
 }
