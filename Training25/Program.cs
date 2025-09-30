@@ -6,7 +6,6 @@
 // Program to print Pascal's triangle.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
-
 namespace Training25;
 
 internal class Program {
@@ -16,7 +15,7 @@ internal class Program {
          if (int.TryParse (ReadLine (), out int rows) && rows > 0 && rows <= 34) {
             List<int[]> values = PascalValues (rows);
             for (int row = 0; row < rows; row++) {
-               for (int space = 0; space < rows - row; space++) Write (" ");
+               Write ("".PadLeft (rows - row));
                for (int col = 0; col < row + 1; col++) Write (values[row][col] + " ");
                WriteLine ();
             }
