@@ -16,16 +16,11 @@ internal class Program {
             "Enter the first number : ");
          if (int.TryParse (ReadLine (), out int num)) {
             Write ("Enter the second number: ");
-            if (int.TryParse (ReadLine (), out int num1))
-               try {
-                  WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM      " +
-                  $"              : {LCM (num, num1)}");
-               } catch (ArgumentOutOfRangeException ex) {
-                  PrintError (ex.Message);
-               } catch (ArgumentException ex) {
-                  PrintError (ex.Message);
-               }
-            else WriteLine ("Second number is invalid");
+            if (int.TryParse (ReadLine (), out int num1)) {
+               if (Validate (num, num1))
+                  WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM                  " +
+                     $"  : {LCM (num, num1)}");
+            } else WriteLine ("Second number is invalid");
          } else WriteLine ("First number is invalid!");
          Write ("Press 'Y' to continue  : ");
       } while (ReadLine () is "y" or "Y");
@@ -33,12 +28,6 @@ internal class Program {
 
    // Returns the GCD of the two given integers
    static int GCD (int num, int num1) {
-      if (num == int.MinValue)
-         throw new ArgumentOutOfRangeException (nameof (num), "int.MinValue is not supported!");
-      if (num1 == int.MinValue)
-         throw new ArgumentOutOfRangeException (nameof (num1), "int.MinValue is not supported!");
-      if (num == 0 && num1 == 0)
-         throw new ArgumentException ("Both the inputs can't be zero", $"{nameof (num)}, {nameof (num1)}");
       num = Math.Abs (num); // GCD and LCM are always positive
       num1 = Math.Abs (num1);
       int temp;
@@ -55,4 +44,15 @@ internal class Program {
 
    // Prints the error message
    static void PrintError (string msg) => WriteLine ($"Error: {msg}");
+
+   // Validates the two input integers
+   static bool Validate (int num, int num1) {
+      var minFlag = num is int.MinValue || num1 is int.MinValue;
+      if (minFlag) { PrintError ("int.MinValue is not supported!"); return false; }
+      if (num == 0 && num1 == 0) {
+         PrintError ("Both the inputs can't be zero");
+         return false;
+      }
+      return true;
+   }
 }
