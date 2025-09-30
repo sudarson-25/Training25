@@ -20,22 +20,16 @@ internal class Program {
                if (Validate (num, num1))
                   WriteLine ($"GCD                    : {GCD (num, num1)}\nLCM                  " +
                      $"  : {LCM (num, num1)}");
-            } else WriteLine ("Second number is invalid");
-         } else WriteLine ("First number is invalid!");
+            } else PrintError ("Second number is invalid!");
+         } else PrintError ("First number is invalid!");
          Write ("Press 'Y' to continue  : ");
       } while (ReadLine () is "y" or "Y");
    }
 
    // Returns the GCD of the two given integers
    static int GCD (int num, int num1) {
-      num = Math.Abs (num); // GCD and LCM are always positive
-      num1 = Math.Abs (num1);
-      int temp;
-      while (num1 != 0) {
-         temp = num1;
-         num1 = num % num1;
-         num = temp;
-      }
+      (num, num1) = (Math.Abs (num), Math.Abs (num1)); // GCD and LCM are always positive
+      while (num1 != 0) (num, num1) = (num1, num % num1);
       return num;
    }
 
@@ -47,8 +41,10 @@ internal class Program {
 
    // Validates the two input integers
    static bool Validate (int num, int num1) {
-      var minFlag = num is int.MinValue || num1 is int.MinValue;
-      if (minFlag) { PrintError ("int.MinValue is not supported!"); return false; }
+      if (num is int.MinValue || num1 is int.MinValue) {
+         PrintError ("int.MinValue is not supported!");
+         return false;
+      }
       if (num == 0 && num1 == 0) {
          PrintError ("Both the inputs can't be zero");
          return false;
