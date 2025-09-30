@@ -12,12 +12,10 @@ internal class Program {
    static void Main () {
       do {
          Write ("\nDigital Root\n~~~~~~~~~~~~\nEnter a number: ");
-         WriteLine (int.TryParse (ReadLine (), out int num) ? num < 0 ? "Digital root is " +
-            "undefined!" : $"Digital Root  : {DigitalRoot (num)}" : "Invalid input!");
+         if (int.TryParse (ReadLine (), out int num) && num > 0)
+            WriteLine ($"Digital Root : {(num == 0 ? 0 : 1 + ((num - 1) % 9))}");
+         else WriteLine ("Invalid input!");
          Write ("Press 'Y' to continue: ");
       } while (ReadLine () is "y" or "Y");
-
-      // Returns the digital root of the given integer.
-      static int DigitalRoot (int num) => num == 0 ? 0 : 1 + (num - 1) % 9;
    }
 }
