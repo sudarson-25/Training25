@@ -13,14 +13,15 @@ namespace Training25;
 internal class Program {
    static void Main () {
       do {
-         WriteLine ("\nReduced String\n~~~~~~~~~~~~~~");
+         WriteLine ("Reduced String\n~~~~~~~~~~~~~~");
          string? input;
          do {
             Write ("Enter a lowercase string: ");
             input = ReadLine ();
-            if (string.IsNullOrWhiteSpace (input)) WriteLine ("Invalid input!");
-         } while (string.IsNullOrWhiteSpace (input));
-         if (input.All (char.IsLower)) {
+            if (input is null) WriteLine ("Invalid input!");
+         } while (input is null);
+         if (input == "") WriteLine ("Reduced String          : ");
+         else if (input.All (char.IsLower)) {
             Stack<char> stack = new ();
             foreach (char letter in input)
                if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
@@ -28,7 +29,7 @@ internal class Program {
             string reducedString = new ([.. stack.Reverse ()]);
             WriteLine ("Reduced String          : " + reducedString);
          } else WriteLine ("String must contain only lowercase characters");
-         Write ("Press 'Y' to continue   : ");
-      } while (ReadLine () is "y" or "Y");
+         WriteLine ("Press 'Y' to continue");
+      } while (ReadKey (true).Key is ConsoleKey.Y);
    }
 }
