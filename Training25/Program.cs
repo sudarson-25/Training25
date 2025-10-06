@@ -11,14 +11,10 @@ namespace Training25;
 
 internal class Program {
    static void Main () {
-      do {
-         WriteLine ("Reverse the String\n~~~~~~~~~~~~~~~~~~");
-         string? input;
-         do {
-            Write ("Enter a string : ");
-            input = ReadLine ();
-            if (string.IsNullOrWhiteSpace (input)) WriteLine ("Invalid input!");
-         } while (string.IsNullOrWhiteSpace (input));
+      while (true) {
+         Write ("Reverse the String\n~~~~~~~~~~~~~~~~~~\nEnter a string : ");
+         var input = ReadLine ();
+         if (string.IsNullOrWhiteSpace (input)) { WriteLine ("Invalid input!"); continue; }
          List<char> rev = [.. input.Replace (" ", "").Reverse ()];
          int inputLen = input.Length;
          for (int i = 0; i < inputLen; i++) {
@@ -28,6 +24,7 @@ internal class Program {
             if (char.IsUpper (ch)) rev[i] = char.ToUpper (rev[i]);
          }
          WriteLine ($"Reversed string: {new ([.. rev])}\nPress 'Y' to continue");
-      } while (ReadKey (true).Key is ConsoleKey.Y);
+         if (ReadKey (true).Key is not ConsoleKey.Y) break;
+      }
    }
 }
