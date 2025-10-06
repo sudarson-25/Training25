@@ -12,7 +12,7 @@ namespace Training25;
 internal class Program {
    static void Main () {
       do {
-         WriteLine ("\nReverse the String\n~~~~~~~~~~~~~~~~~~");
+         WriteLine ("Reverse the String\n~~~~~~~~~~~~~~~~~~");
          string? input;
          do {
             Write ("Enter a string : ");
@@ -20,12 +20,15 @@ internal class Program {
             if (string.IsNullOrWhiteSpace (input)) WriteLine ("Invalid input!");
          } while (string.IsNullOrWhiteSpace (input));
          List<char> rev = [.. input.Replace (" ", "").Reverse ()];
-         for (int i = 0; i < input.Length; i++) {
-            if (input[i] == ' ') rev.Insert (i, ' ');
-            if (char.IsLower (input[i])) rev[i] = char.ToLower (rev[i]);
-            if (char.IsUpper (input[i])) rev[i] = char.ToUpper (rev[i]);
+         int inputLen = input.Length;
+         for (int i = 0; i < inputLen; i++) {
+            char character = input[i];
+            if (character == ' ') rev.Insert (i, ' ');
+            if (char.IsLower (character)) rev[i] = char.ToLower (rev[i]);
+            if (char.IsUpper (character)) rev[i] = char.ToUpper (rev[i]);
          }
-         Write ("Reversed string: " + string.Concat (rev) + "\nPress 'Y' to continue: ");
-      } while (ReadLine () is "y" or "Y");
+         string strRev = new ([.. rev]);
+         WriteLine ("Reversed string: " + strRev + "\nPress 'Y' to continue\n");
+      } while (ReadKey (true).Key is ConsoleKey.Y);
    }
 }
