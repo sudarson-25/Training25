@@ -12,14 +12,10 @@ namespace Training25;
 
 internal class Program {
    static void Main () {
-      do {
-         WriteLine ("Reduced String\n~~~~~~~~~~~~~~");
-         string? input;
-         do {
-            Write ("Enter a lowercase string: ");
-            input = ReadLine ();
-            if (input is null) WriteLine ("Invalid input!");
-         } while (input is null);
+      while (true) {
+         Write ("Reduced String\n~~~~~~~~~~~~~~\nEnter a lowercase string: ");
+         var input = ReadLine ();
+         if (input is null) { WriteLine ("Invalid input!"); continue; }
          if (input == "") WriteLine ("Reduced String          : ");
          else if (input.All (char.IsLower)) {
             Stack<char> stack = new ();
@@ -30,6 +26,7 @@ internal class Program {
             WriteLine ("Reduced String          : " + reducedString);
          } else WriteLine ("String must contain only lowercase characters");
          WriteLine ("Press 'Y' to continue");
-      } while (ReadKey (true).Key is ConsoleKey.Y);
+         if (ReadKey (true).Key is not ConsoleKey.Y) break;
+      }
    }
 }
