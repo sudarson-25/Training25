@@ -6,17 +6,19 @@
 // Program to reduce a string of lowercase characters by deleting a pair of adjacent letters that
 // match.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 
 internal class Program {
    static void Main () {
       do {
-         Console.WriteLine ("\nReduced String\n~~~~~~~~~~~~~~");
+         WriteLine ("\nReduced String\n~~~~~~~~~~~~~~");
          string? input;
          do {
-            Console.Write ("Enter a lowercase string: ");
-            input = Console.ReadLine ();
-            if (string.IsNullOrWhiteSpace (input)) Console.WriteLine ("Invalid input!");
+            Write ("Enter a lowercase string: ");
+            input = ReadLine ();
+            if (string.IsNullOrWhiteSpace (input)) WriteLine ("Invalid input!");
          } while (string.IsNullOrWhiteSpace (input));
          if (input.All (char.IsLower)) {
             Stack<char> stack = new ();
@@ -24,9 +26,9 @@ internal class Program {
                if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
                else stack.Push (letter);
             string reducedString = new ([.. stack.Reverse ()]);
-            Console.WriteLine ("Reduced String          : " + reducedString);
-         } else Console.WriteLine ("String must contain only lowercase characters");
-         Console.Write ("Press 'Y' to continue   : ");
-      } while (Console.ReadLine () is "y" or "Y");
+            WriteLine ("Reduced String          : " + reducedString);
+         } else WriteLine ("String must contain only lowercase characters");
+         Write ("Press 'Y' to continue   : ");
+      } while (ReadLine () is "y" or "Y");
    }
 }
