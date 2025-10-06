@@ -11,16 +11,21 @@ namespace Training25;
 
 internal class Program {
    static void Main () {
-      do {
+      while (true) {
          Write ("Armstrong Number\n~~~~~~~~~~~~~~~~\nEnter a number: ");
-         if (int.TryParse (ReadLine (), out int num) && num >= 0) {
-            int numCopy = num, power = num.ToString ().Length;
-            double armstrong = 0;
-            while (numCopy > 0)
-               (armstrong, numCopy) = (armstrong + Math.Pow (numCopy % 10, power), numCopy / 10);
-            WriteLine (armstrong == num ? "Armstrong Number!" : "Not an Armstrong number ");
-         } else WriteLine ("Invalid input!");
+         if (int.TryParse (ReadLine (), out int num) && num >= 0)
+            WriteLine (IsArmstrong (num) ? "Armstrong Number!" : "Not an Armstrong number ");
+         else WriteLine ("Invalid input!");
          WriteLine ("Press 'Y' to continue");
-      } while (ReadKey (true).Key is ConsoleKey.Y);
+         if (ReadKey (true).Key is not ConsoleKey.Y) break;
+      }
+   }
+
+   static bool IsArmstrong (int num) {
+      int power = num.ToString ().Length;
+      double armstrong = 0;
+      for (int i = 0; i < power; i++)
+         armstrong += Math.Pow (num / (int)Math.Pow (10, i) % 10, power);
+      return armstrong == num;
    }
 }
