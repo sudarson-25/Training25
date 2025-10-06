@@ -22,13 +22,12 @@ internal class Program {
          List<char> rev = [.. input.Replace (" ", "").Reverse ()];
          int inputLen = input.Length;
          for (int i = 0; i < inputLen; i++) {
-            char character = input[i];
-            if (character == ' ') rev.Insert (i, ' ');
-            if (char.IsLower (character)) rev[i] = char.ToLower (rev[i]);
-            if (char.IsUpper (character)) rev[i] = char.ToUpper (rev[i]);
+            char ch = input[i];
+            if (ch == ' ') rev.Insert (i, ' ');
+            if (char.IsLower (ch)) rev[i] = char.ToLower (rev[i]);
+            if (char.IsUpper (ch)) rev[i] = char.ToUpper (rev[i]);
          }
-         string strRev = new ([.. rev]);
-         WriteLine ("Reversed string: " + strRev + "\nPress 'Y' to continue\n");
+         WriteLine ($"Reversed string: {new ([.. rev])}\nPress 'Y' to continue");
       } while (ReadKey (true).Key is ConsoleKey.Y);
    }
 }
