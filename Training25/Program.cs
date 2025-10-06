@@ -21,11 +21,10 @@ internal class Program {
       }
    }
 
+   // Returns true if the number is an Armstrong number else returns false
    static bool IsArmstrong (int num) {
-      int power = num.ToString ().Length;
-      double armstrong = 0;
-      for (int i = 0; i < power; i++)
-         armstrong += Math.Pow (num / (int)Math.Pow (10, i) % 10, power);
+      int power = num.ToString ().Length, armstrong = 0;
+      for (int i = num; i > 0; i /= 10) armstrong += (int)Math.Pow (i % 10, power);
       return armstrong == num;
    }
 }
