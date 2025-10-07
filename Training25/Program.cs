@@ -15,9 +15,10 @@ internal class Program {
       while (true) {
          Write ("Reduced String\n~~~~~~~~~~~~~~\nEnter a lowercase string: ");
          var input = ReadLine ();
-         if (input is null) { WriteLine ("Invalid input!"); continue; }
-         if (input == "") WriteLine ("Reduced String          : ");
-         else if (input.All (char.IsLower)) {
+         if (input is null) {
+            WriteLine ("Invalid input!");
+            continue;
+         } else if (input.All (ch => char.IsLower (ch) || char.IsWhiteSpace (ch))) {
             Stack<char> stack = new ();
             foreach (char letter in input)
                if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
