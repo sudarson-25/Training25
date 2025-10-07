@@ -23,6 +23,6 @@ internal class Program {
    }
 
    // Returns the winner of the voting contest
-   static char GetWinner (string S) => S.GroupBy (c => c).OrderByDescending (g => g.Count ())
+   static char GetWinner (string S) => S.GroupBy (char.ToLower).OrderByDescending (g => g.Count ())
       .ThenBy (g => S.IndexOf (g.Key)).First ().Key;
 }
