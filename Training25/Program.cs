@@ -15,18 +15,16 @@ internal class Program {
       while (true) {
          Write ("Reduced String\n~~~~~~~~~~~~~~\nEnter a lowercase string: ");
          var input = ReadLine ();
-         if (input is null) {
-            WriteLine ("Invalid input!");
-            continue;
+         if (string.IsNullOrEmpty (input)) { WriteLine ("Invalid input!"); continue; }
+         if (!input.All (ch => char.IsLower (ch) || char.IsWhiteSpace (ch))) {
+            WriteLine ("String must contain only lowercase characters"); continue;
          }
-         if (input.All (ch => char.IsLower (ch) || char.IsWhiteSpace (ch))) {
-            Stack<char> stack = new ();
-            foreach (char letter in input)
-               if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
-               else stack.Push (letter);
-            WriteLine ($"Reduced String          : {new ([.. stack.Reverse ()])}");
-         } else WriteLine ("String must contain only lowercase characters");
-         WriteLine ("Press 'Y' to continue");
+         Stack<char> stack = new ();
+         foreach (char letter in input)
+            if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
+            else stack.Push (letter);
+         WriteLine ($"Reduced String          : {new ([.. stack.Reverse ()])}\nPress 'Y' to" +
+            " continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
