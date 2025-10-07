@@ -22,8 +22,7 @@ internal class Program {
             foreach (char letter in input)
                if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
                else stack.Push (letter);
-            string reducedString = new ([.. stack.Reverse ()]);
-            WriteLine ("Reduced String          : " + reducedString);
+            WriteLine ($"Reduced String          : {new ([.. stack.Reverse ()])}");
          } else WriteLine ("String must contain only lowercase characters");
          WriteLine ("Press 'Y' to continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
