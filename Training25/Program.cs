@@ -18,7 +18,8 @@ internal class Program {
          if (input is null) {
             WriteLine ("Invalid input!");
             continue;
-         } else if (input.All (ch => char.IsLower (ch) || char.IsWhiteSpace (ch))) {
+         }
+         if (input.All (ch => char.IsLower (ch) || char.IsWhiteSpace (ch))) {
             Stack<char> stack = new ();
             foreach (char letter in input)
                if (stack.Count > 0 && stack.Peek () == letter) stack.Pop ();
