@@ -17,12 +17,12 @@ internal class Program {
          if (string.IsNullOrWhiteSpace (password)) { WriteLine ("Invalid Input!\n"); continue; }
          bool iWeak = false;
          if (password.Length < 6) iWeak = PrintError ("Must be atleast 6 characters in length");
-         if (!password.Any (char.IsDigit)) iWeak = PrintError ("Must conatin atleast one digit");
-         if (!password.Any (char.IsLower)) iWeak = PrintError ("Must conatin atleast one " +
+         if (!password.Any (char.IsDigit)) iWeak = PrintError ("Must contain atleast one digit");
+         if (!password.Any (char.IsLower)) iWeak = PrintError ("Must contain atleast one " +
             "lowercase English character");
-         if (!password.Any (char.IsUpper)) iWeak = PrintError ("Must conatin atleast one " +
+         if (!password.Any (char.IsUpper)) iWeak = PrintError ("Must contain atleast one " +
             "uppercase English character");
-         if (!password.Any (sSpecialCharacters.Contains)) iWeak = PrintError ("Must conatin " +
+         if (password.All (char.IsAsciiLetterOrDigit)) iWeak = PrintError ("Must contain " +
             "atleast one special character");
          WriteLine (iWeak ? "Weak Password!" : "Strong Password!");
          WriteLine ("Press 'Y' to continue");
@@ -35,6 +35,4 @@ internal class Program {
          return true;
       }
    }
-
-   static string sSpecialCharacters = "!@#$%^&*()-+";
 }
