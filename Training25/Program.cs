@@ -5,22 +5,19 @@
 // Program.cs
 // Program to print the nth Armstrong number (assuming base 10).
 // ------------------------------------------------------------------------------------------------
+using System; //Needed since the program is run from the cmd prompt
 using static System.Console;
 
 namespace Training25;
 
 internal class Program {
-   static void Main () {
-      while (true) {
-         Write ("Nth Armstrong Number\n~~~~~~~~~~~~~~~~~~~~\nEnter a number (0 to 34): ");
-         if (int.TryParse (ReadLine (), out int input) && input > 0 && input < 35) {
-            int armstrongCount = 0, num;
-            for (num = 0; armstrongCount < input; num++)
-               if (IsArmstrong (num)) armstrongCount++;
-            WriteLine ($"Nth Armstrong number    : {num - 1}");
-         } else WriteLine ("Invalid input!");
-         WriteLine ("Press 'Y' to continue");
-         if (ReadKey (true).Key is not ConsoleKey.Y) break;
+   static void Main (string[] args) {
+      if (args.Length != 1 || !int.TryParse (args[0], out int input) || input < 0 || input > 34)
+         WriteLine ("Invalid input!");
+      else {
+         int armstrongCount = 0, num;
+         for (num = 0; armstrongCount < input; num++) if (IsArmstrong (num)) armstrongCount++;
+         WriteLine ($"Nth Armstrong number : {num - 1}");
       }
    }
 
