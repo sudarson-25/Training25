@@ -22,7 +22,7 @@ internal class Program {
             "lowercase English character");
          if (!password.Any (char.IsUpper)) iWeak = PrintError ("Must contain atleast one " +
             "uppercase English character");
-         if (password.All (char.IsAsciiLetterOrDigit)) iWeak = PrintError ("Must contain " +
+         if (password.All (char.IsLetterOrDigit)) iWeak = PrintError ("Must contain " +
             "atleast one special character");
          WriteLine (iWeak ? "Weak Password!" : "Strong Password!");
          WriteLine ("Press 'Y' to continue");
