@@ -37,9 +37,10 @@ internal class Program {
             Write ("Enter the order: ");
             var order = ReadLine ();
             if (string.IsNullOrWhiteSpace (order)) { PrintError (); continue; }
-            if (!order.All (char.IsLetter)) { PrintError (); continue; }
             O = new ([.. order.Select (char.ToLower)]);
-            if (O is not ("ascending" or "descending")) { PrintError (); continue; }
+            if (!O.All (char.IsLetter) || O is not ("ascending" or "descending")) {
+               PrintError (); continue;
+            }
             break;
          }
          SortAndSwap (A, S, O);
