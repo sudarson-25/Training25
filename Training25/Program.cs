@@ -3,7 +3,8 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program to print the sorted array by keeping the elements matching S to the last of the array.
+// Program to print the sorted array by keeping the elements matching special character to the last
+// of the array.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
@@ -13,38 +14,36 @@ internal class Program {
    static void Main () {
       while (true) {
          Write ("Sort and Swap Special Characters\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nEnter the" +
-            " size of the array: ");
-         if (!int.TryParse (ReadLine (), out int num) || num <= 0) { PrintError (); continue; }
-         Write ("Enter the array elements: ");
-         char[] A = new char[num];
-         for (int i = 0; i < num; i++) {
-            if (!char.TryParse (ReadLine (), out char element) || !char.IsLetter (element)) {
-               PrintError (); i--; continue;
-            }
-            A[i] = char.ToLower (element);
-         }
-         char S;
+            " letters: ");
+         char[] inputArray;
+         string? input;
          while (true) {
-            Write ("Enter a special character: ");
-            if (!char.TryParse (ReadLine (), out S) || !char.IsLetter (S)) {
-               PrintError (); continue;
-            }
-            S = char.ToLower (S);
+            input = ReadLine ();
+            if (string.IsNullOrWhiteSpace (input)) { PrintError (); continue; }
+            if (!input.All (char.IsLetter)) { PrintError (); continue; }
+            inputArray = [.. input.ToLower ()];
             break;
          }
-         string O;
+         char specialChar;
+         Write ("Enter the special character: ");
          while (true) {
-            Write ("Enter the order: ");
-            var order = ReadLine ();
-            if (string.IsNullOrWhiteSpace (order)) { PrintError (); continue; }
-            O = new ([.. order.Select (char.ToLower)]);
-            if (!O.All (char.IsLetter) || O is not ("ascending" or "descending")) {
+            if (!char.TryParse (ReadLine (), out specialChar) || !char.IsLetter (specialChar)) {
                PrintError (); continue;
             }
+            specialChar = char.ToLower (specialChar);
             break;
          }
-         SortAndSwap (A, S, O);
-         WriteLine ($"The modified array is: {string.Join (", ", A)}\nPress 'Y' to continue");
+         string order;
+         Write ("Type 'A' for ascending order or 'D' for descending order: ");
+         while (true) {
+            if (!char.TryParse (ReadLine (), out char inputOrder) || inputOrder is not ('A' or 'a'
+               or 'd' or 'D')) { PrintError (); continue; }
+            order = inputOrder is 'A' or 'a' ? "ascending" : "descending";
+            break;
+         }
+         SortAndSwap (inputArray, specialChar, order);
+         WriteLine ($"Letters: {input}\nSorted: {string.Join (", ", inputArray)}\nPress 'Y' to " +
+            "continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
@@ -54,12 +53,12 @@ internal class Program {
 
    // Sorts the given array by keeping the elements matching the given character to the last of the
    // array based on the given order
-   static void SortAndSwap (char[] A, char S, string O = "ascending") {
-      var AList = A.ToList ();
-      int count = AList.RemoveAll (ch => ch == S);
-      AList.Sort ();
-      if (O is "descending") AList.Reverse ();
-      for (int i = 0; i < count; i++) AList.Add (S);
-      for (int i = 0; i < A.Length; i++) A[i] = AList[i];
+   static void SortAndSwap (char[] inputArray, char specialChar, string order = "ascending") {
+      var inputList = inputArray.ToList ();
+      int count = inputList.RemoveAll (ch => ch == specialChar);
+      inputList.Sort ();
+      if (order is "descending") inputList.Reverse ();
+      for (int i = 0; i < count; i++) inputList.Add (specialChar);
+      for (int i = 0; i < inputArray.Length; i++) inputArray[i] = inputList[i];
    }
 }
