@@ -16,16 +16,20 @@ internal class Program {
          var input = ReadLine ();
          if (string.IsNullOrWhiteSpace (input)) { WriteLine ("Invalid input!"); continue; }
          if (!input.All (char.IsLetter)) { WriteLine ("Invalid input!"); continue; }
-         var (winner, votes) = GetWinner (input);
+         var (winner, votes) = GetWinner (input.ToLower ());
          WriteLine ($"{char.ToUpper (winner)}, {votes}\nPress 'Y' to continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
 
-   // Returns the winner and of the voting contest and the number of votes
+   // Returns the winner of the voting contest and the number of votes
    static (char, int) GetWinner (string input) {
-      var winner = input.GroupBy (char.ToLower).OrderByDescending (g => g.Count ())
-      .ThenBy (g => input.IndexOf (g.Key)).First ();
-      return (winner.Key, winner.Count ());
+      int max = 0;
+      char winner = '\0';
+      foreach (char contestant in input) {
+         int count = input.Count (ch => ch == contestant);
+         if (count > max) (max, winner) = (count, contestant);
+      }
+      return (winner, max);
    }
 }
