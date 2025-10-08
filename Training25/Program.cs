@@ -12,11 +12,11 @@ namespace Training25;
 
 internal class Program {
    static void Main (string[] args) {
-      if (args.Length != 1 || !int.TryParse (args[0], out int input) || input < 0 || input > 34)
+      if (args.Length != 1 || !int.TryParse (args[0], out int input) || input <= 0 || input > 32)
          WriteLine ("Invalid input!");
       else {
-         int armstrongCount = 0, num;
-         for (num = 0; armstrongCount < input; num++) if (IsArmstrong (num)) armstrongCount++;
+         int armstrongCount = 0, num = 0;
+         while (armstrongCount < input) { if (IsArmstrong (num)) armstrongCount++; num++; }
          WriteLine ($"Nth Armstrong number : {num - 1}");
       }
    }
