@@ -3,7 +3,7 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to determine the winner of a voting contest based on character frequency and order.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
@@ -13,16 +13,19 @@ internal class Program {
    static void Main () {
       while (true) {
          Write ("Voting Contest\n~~~~~~~~~~~~~~\nEnter a string: ");
-         var S = ReadLine ();
-         if (string.IsNullOrWhiteSpace (S)) { WriteLine ("Invalid input!"); continue; }
-         if (!S.All (char.IsLetter)) { WriteLine ("Invalid input!"); continue; }
-         char winner = GetWinner (S);
-         WriteLine ($"{char.ToUpper (winner)} or {char.ToLower (winner)}\nPress 'Y' to continue");
+         var input = ReadLine ();
+         if (string.IsNullOrWhiteSpace (input)) { WriteLine ("Invalid input!"); continue; }
+         if (!input.All (char.IsLetter)) { WriteLine ("Invalid input!"); continue; }
+         var (winner, votes) = GetWinner (input);
+         WriteLine ($"{char.ToUpper (winner)}, {votes}\nPress 'Y' to continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
 
-   // Returns the winner of the voting contest
-   static char GetWinner (string S) => S.GroupBy (char.ToLower).OrderByDescending (g => g.Count ())
-      .ThenBy (g => S.IndexOf (g.Key)).First ().Key;
+   // Returns the winner and of the voting contest and the number of votes
+   static (char, int) GetWinner (string input) {
+      var winner = input.GroupBy (char.ToLower).OrderByDescending (g => g.Count ())
+      .ThenBy (g => input.IndexOf (g.Key)).First ();
+      return (winner.Key, winner.Count ());
+   }
 }
