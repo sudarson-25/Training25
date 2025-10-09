@@ -5,6 +5,7 @@
 // Program.cs
 // Program to print the nth Armstrong number (assuming base 10).
 // ------------------------------------------------------------------------------------------------
+using System;
 using static System.Console;
 
 namespace Training25;
@@ -15,7 +16,7 @@ internal class Program {
          WriteLine ("Invalid input!"); return;
       }
       int armstrongCount = 0, num = 0;
-      while (armstrongCount < input) { if (IsArmstrong (num)) armstrongCount++; num++; }
+      while (armstrongCount < input) if (IsArmstrong (num++)) armstrongCount++;
       WriteLine ($"Nth Armstrong number : {num - 1}");
    }
 
