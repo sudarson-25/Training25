@@ -14,21 +14,23 @@ internal class Program {
       while (true) {
          Write ("Voting Contest\n~~~~~~~~~~~~~~\nEnter a string: ");
          var input = ReadLine ();
-         if (string.IsNullOrWhiteSpace (input)) { WriteLine ("Invalid input!"); continue; }
-         if (!input.All (char.IsLetter)) { WriteLine ("Invalid input!"); continue; }
-         var (winner, votes) = GetWinner (input.ToLower ());
-         WriteLine ($"{char.ToUpper (winner)}, {votes}\nPress 'Y' to continue");
+         if (string.IsNullOrWhiteSpace (input) || !input.All (char.IsLetter)) {
+            WriteLine ("Invalid input!"); continue;
+         }
+         var (winner, max) = GetWinner (input);
+         WriteLine ($"{char.ToUpper (winner)}, {max}\nPress 'Y' to continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
 
    // Returns the winner of the voting contest and the number of votes
    static (char, int) GetWinner (string input) {
+      input = input.ToLower ();
       int max = 0;
       char winner = '\0';
       foreach (char contestant in input) {
          int count = input.Count (ch => ch == contestant);
-         if (count > max) (max, winner) = (count, contestant);
+         if (count > max) (winner, max) = (contestant, count);
       }
       return (winner, max);
    }
