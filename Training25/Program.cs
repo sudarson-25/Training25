@@ -34,8 +34,8 @@ internal class Program {
    //Prints the prompt message and returns the validated input from the user
    static T GetValidatedInput<T> (string prompt, Func<string, bool> IsValid, Func<string, T>
       Convert) {
-      Write (prompt);
       while (true) {
+         Write (prompt);
          var input = ReadLine ();
          if (input == null || !IsValid (input)) { PrintError (); continue; }
          return Convert (input);
