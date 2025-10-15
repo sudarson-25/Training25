@@ -15,13 +15,12 @@ internal class Program {
       while (true) {
          WriteLine ("Sort and Swap Special Characters\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
          string input = GetValidString ("Enter the letters: ");
-         char specialCharacter = GetValidChar<char> ("Enter the special character: ",
-            input => char.ToLower (char.Parse (input)));
-         string order = GetValidChar<string> ("Type 'A' for ascending order or 'D' for" +
-            " descending order: ", input => char.Parse (input) is 'A' or 'a' ? "ascending" :
-            "descending");
+         GetValidChar ("Enter the special character: ", char.ToLower, out char specialCharacter);
+         GetValidChar ("\nType 'A' for ascending order or 'D' for" +
+            " descending order: ", input => input is 'A' or 'a' ? "ascending" :
+            "descending", out string order);
          var output = SortAndSwap ([.. input], specialCharacter, order);
-         WriteLine ($"Letters: {input}\nSorted : {string.Join (", ", output)}\nPress 'Y' to" +
+         WriteLine ($"\nLetters: {input}\nSorted : {string.Join (", ", output)}\nPress 'Y' to" +
             " continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
@@ -41,23 +40,22 @@ internal class Program {
    }
 
    //Prints the prompt message and returns the validated input from the user
-   static T GetValidChar<T> (string prompt, Func<string, T> Convert) {
+   static void GetValidChar<T> (string prompt, Func<char, T> Convert, out T value) {
       while (true) {
          Write (prompt);
-         var input = ReadLine ();
-         if (input == null || !char.TryParse (input, out char specialChar) ||
-            !char.IsLetter (specialChar)) { PrintError (); continue; }
-         return Convert (input);
+         var input = ReadKey ().KeyChar;
+         if (!char.IsLetter (input)) { PrintError (); continue; }
+         value = Convert (input);
+         break;
       }
    }
 
    //Prints an error message
    static void PrintError () => WriteLine ("Invalid input!");
 
-   // Sorts the given array by keeping the elements matching the given character to the last of the
-   // array based on the given order
-   static List<char> SortAndSwap (char[] inputArray, char specialChar, string order) {
-      var inputList = inputArray.ToList ();
+   // Sorts the given list by keeping the elements matching the given character to the last of the
+   // list based on the given order
+   static List<char> SortAndSwap (List<char> inputList, char specialChar, string order) {
       int count = inputList.RemoveAll (ch => ch == specialChar);
       inputList = order is "descending" ? [.. inputList.OrderDescending ()] :
          [.. inputList.Order ()];
