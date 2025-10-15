@@ -20,7 +20,7 @@ internal class Program {
          string order = GetValidChar<string> ("Type 'A' for ascending order or 'D' for" +
             " descending order: ", input => char.Parse (input) is 'A' or 'a' ? "ascending" :
             "descending");
-         var output = SortAndSwap (input.ToCharArray (), specialCharacter, order);
+         var output = SortAndSwap ([.. input], specialCharacter, order);
          WriteLine ($"Letters: {input}\nSorted : {string.Join (", ", output)}\nPress 'Y' to" +
             " continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
@@ -59,8 +59,8 @@ internal class Program {
    static List<char> SortAndSwap (char[] inputArray, char specialChar, string order) {
       var inputList = inputArray.ToList ();
       int count = inputList.RemoveAll (ch => ch == specialChar);
-      inputList = [.. inputList.Order ()];
-      if (order is "descending") inputList = [.. inputList.OrderDescending ()];
+      inputList = order is "descending" ? [.. inputList.OrderDescending ()] :
+         [.. inputList.Order ()];
       for (int i = 0; i < count; i++) inputList.Add (specialChar);
       return inputList;
    }
