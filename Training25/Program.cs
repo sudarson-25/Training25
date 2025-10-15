@@ -14,30 +14,39 @@ internal class Program {
    static void Main () {
       while (true) {
          WriteLine ("Sort and Swap Special Characters\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-         (char[] inputArray, string input) = GetValidatedInput<(char[], string)> ("Enter the" +
-            " letters: ", input => !string.IsNullOrWhiteSpace (input) && input.All (char.IsLetter),
-            input => ([.. input.ToLower ()], input)); // Multiple return values using tuple
-         char specialCharacter = GetValidatedInput<char> ("Enter the special character: ",
-            input => char.TryParse (input, out char specialChar) && char.IsLetter (specialChar),
+         string input = GetValidString ("Enter the letters: ");
+         char specialCharacter = GetValidChar<char> ("Enter the special character: ",
             input => char.ToLower (char.Parse (input)));
-         string order = GetValidatedInput<string> ("Type 'A' for ascending order or 'D' for" +
-            " descending order: ", input => char.TryParse (input, out char specialChar) &&
-            char.IsLetter (specialChar), input => char.Parse (input) is 'A' or 'a' ? "ascending" :
+         string order = GetValidChar<string> ("Type 'A' for ascending order or 'D' for" +
+            " descending order: ", input => char.Parse (input) is 'A' or 'a' ? "ascending" :
             "descending");
-         SortAndSwap (inputArray, specialCharacter, order);
-         WriteLine ($"Letters: {input}\nSorted : {string.Join (", ", inputArray)}" +
-            "\nPress 'Y' to continue");
+         var output = SortAndSwap (input.ToCharArray (), specialCharacter, order);
+         WriteLine ($"Letters: {input}\nSorted : {string.Join (", ", output)}\nPress 'Y' to" +
+            " continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
 
    //Prints the prompt message and returns the validated input from the user
-   static T GetValidatedInput<T> (string prompt, Func<string, bool> IsValid, Func<string, T>
-      Convert) {
+   static string GetValidString (string prompt) {
       while (true) {
          Write (prompt);
          var input = ReadLine ();
-         if (input == null || !IsValid (input)) { PrintError (); continue; }
+         if (input == null || string.IsNullOrWhiteSpace (input) || !input.All (char.IsLetter)) {
+            PrintError ();
+            continue;
+         }
+         return input.ToLower ();
+      }
+   }
+
+   //Prints the prompt message and returns the validated input from the user
+   static T GetValidChar<T> (string prompt, Func<string, T> Convert) {
+      while (true) {
+         Write (prompt);
+         var input = ReadLine ();
+         if (input == null || !char.TryParse (input, out char specialChar) ||
+            !char.IsLetter (specialChar)) { PrintError (); continue; }
          return Convert (input);
       }
    }
@@ -47,12 +56,12 @@ internal class Program {
 
    // Sorts the given array by keeping the elements matching the given character to the last of the
    // array based on the given order
-   static void SortAndSwap (char[] inputArray, char specialChar, string order) {
+   static List<char> SortAndSwap (char[] inputArray, char specialChar, string order) {
       var inputList = inputArray.ToList ();
       int count = inputList.RemoveAll (ch => ch == specialChar);
-      inputList.Sort ();
-      if (order is "descending") inputList.Reverse ();
+      inputList = [.. inputList.Order ()];
+      if (order is "descending") inputList = [.. inputList.OrderDescending ()];
       for (int i = 0; i < count; i++) inputList.Add (specialChar);
-      for (int i = 0; i < inputArray.Length; i++) inputArray[i] = inputList[i];
+      return inputList;
    }
 }
