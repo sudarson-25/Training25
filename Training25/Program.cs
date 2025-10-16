@@ -26,7 +26,9 @@ internal class Program {
 
    // Returns the smallest transform steps
    static int GetSmallestTransform (int num, out string result) {
-      List<int> digits = [.. num.ToString ().Select (a => a - '0').Order ()];
+      List<int> digits = [];
+      while (num > 0) { digits.Add (num % 10); num /= 10; }
+      digits = [.. digits.Order ()];
       int count = digits.Count, median = digits[count / 2];
       result = new ((char)('0' + median), count);
       return digits.Sum (digit => Abs (digit - median));
