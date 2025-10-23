@@ -18,6 +18,8 @@ internal class Program {
       WriteLine (list1[8]);
       list1.Insert (4, 9);
       list1.Print ();
+      WriteLine (list1.Capacity);
+      WriteLine (list1.Count);
       list1.RemoveAt (9);
       list1.Print ();
       list1.Clear ();
@@ -25,8 +27,7 @@ internal class Program {
    }
 
    #region class MyList ---------------------------------------------------------------------------
-   /// <summary>This class implements a custom list using arrays as the underlying data structure.
-   /// </summary>
+   /// <summary>This class implements a custom list using arrays as the underlying data structure.</summary>
    class MyList<T> {
       #region Constructor --------------------------------------------
       // Constructor to allocate the initial array
@@ -61,7 +62,7 @@ internal class Program {
       #region Methods ------------------------------------------------
       // Adds the given element to the end of the list
       public void Add (T element) {
-         if (mCount == Capacity) Array.Resize (ref mArray, Capacity * 2);
+         ResizeArray ();
          mArray[mCount++] = element;
       }
 
@@ -76,7 +77,7 @@ internal class Program {
       public void Insert (int index, T a) {
          ValidateArgument (index);
          if (index > mCount) throw new IndexOutOfRangeException ();
-         if (mCount == Capacity) Array.Resize (ref mArray, Capacity * 2);
+         ResizeArray ();
          for (int i = mCount; i > index; i--) mArray[i] = mArray[i - 1];
          mArray[index] = a;
          mCount++;
@@ -103,9 +104,18 @@ internal class Program {
          for (int i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
          mCount--;
       }
+      #endregion
 
+      #region Implementation -----------------------------------------
+      // Resizes the underlying array when capacity is reached
+      void ResizeArray () {
+         if (mCount == Capacity) Array.Resize (ref mArray, Capacity * 2);
+      }
+
+      // Validates that the index is non-negative
       void ValidateArgument (int index) => ArgumentOutOfRangeException.ThrowIfNegative (index);
 
+      // Validates that the index is within the current count
       void ValidateIndex (int index) {
          if (index >= mCount) throw new IndexOutOfRangeException ();
       }
