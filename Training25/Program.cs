@@ -47,12 +47,10 @@ internal class Program {
       // Indexer to get or set elements at a specific index
       public T this[int index] {
          get {
-            ValidateArgument (index);
             ValidateIndex (index);
             return mArray[index];
          }
          set {
-            ValidateArgument (index);
             ValidateIndex (index);
             mArray[index] = value;
          }
@@ -75,8 +73,7 @@ internal class Program {
 
       /// <summary>Inserts the given element at the specified index</summary>
       public void Insert (int index, T a) {
-         ValidateArgument (index);
-         if (index > mCount) throw new IndexOutOfRangeException ();
+         ValidateIndex (index);
          ResizeArray ();
          for (int i = mCount; i > index; i--) mArray[i] = mArray[i - 1];
          mArray[index] = a;
@@ -99,7 +96,6 @@ internal class Program {
 
       /// <summary>Removes the element at the specified index</summary>
       public void RemoveAt (int index) {
-         ValidateArgument (index);
          ValidateIndex (index);
          for (int i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
          mCount--;
@@ -112,11 +108,9 @@ internal class Program {
          if (mCount == Capacity) Array.Resize (ref mArray, Capacity * 2);
       }
 
-      // Validates that the index is non-negative
-      void ValidateArgument (int index) => ArgumentOutOfRangeException.ThrowIfNegative (index);
-
-      // Validates that the index is within the current count
+      // Validates that the index is non-negative and is within the current count
       void ValidateIndex (int index) {
+         ArgumentOutOfRangeException.ThrowIfNegative (index);
          if (index >= mCount) throw new IndexOutOfRangeException ();
       }
       #endregion
