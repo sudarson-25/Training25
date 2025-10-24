@@ -60,20 +60,20 @@ internal class Program {
       #endregion
 
       #region Methods ------------------------------------------------
-      // Adds the given element to the end of the list
+      /// <summary>Adds the given element to the end of the list</summary>
       public void Add (T element) {
          ResizeArray ();
          mArray[mCount++] = element;
       }
 
-      // Clears the list
+      /// <summary>Clears the list</summary>
       public void Clear () {
          if (mCount == 0) return;
          Array.Clear (mArray);
          mCount = 0;
       }
 
-      // Inserts the given element at the specified index
+      /// <summary>Inserts the given element at the specified index</summary>
       public void Insert (int index, T a) {
          ValidateArgument (index);
          if (index > mCount) throw new IndexOutOfRangeException ();
@@ -83,13 +83,13 @@ internal class Program {
          mCount++;
       }
 
-      // Displays the elements of the list
+      /// <summary>Displays the elements of the list</summary>
       public void Print () {
          for (int i = 0; i < mCount; i++) Write (this[i] + " ");
          WriteLine ();
       }
 
-      // Removes the first occurrence of the given element from the list
+      /// <summary>Removes the first occurrence of the given element from the list</summary>
       public bool Remove (T element) {
          int index = Array.IndexOf (mArray, element);
          if (index is -1) return false;
@@ -97,7 +97,7 @@ internal class Program {
          return true;
       }
 
-      // Removes the element at the specified index
+      /// <summary>Removes the element at the specified index</summary>
       public void RemoveAt (int index) {
          ValidateArgument (index);
          ValidateIndex (index);
