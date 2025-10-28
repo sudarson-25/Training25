@@ -26,12 +26,7 @@ internal class Program {
    // Returns the winner of the voting contest and the number of votes
    static (char, int) GetWinner (string input) {
       input = input.ToLower ();
-      int max = 0;
-      char winner = '\0';
-      foreach (char contestant in input) {
-         int count = input.Count (ch => ch == contestant);
-         if (count > max) (winner, max) = (contestant, count);
-      }
-      return (winner, max);
+      var contestants = input.GroupBy (ch => ch).Select (g => (ch: g.Key, count: g.Count ()));
+      return contestants.OrderByDescending (entry => entry.count).First ();
    }
 }
