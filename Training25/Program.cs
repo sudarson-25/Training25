@@ -97,10 +97,8 @@ internal class Program {
       /// <summary>Removes the element at the specified index</summary>
       public void RemoveAt (int index) {
          ValidateIndex (index);
-         int i;
-         for (i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
-         mArray[i] = default!;
-         mCount--;
+         for (int i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
+         mArray[--mCount] = default!;
       }
       #endregion
 
