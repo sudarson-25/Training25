@@ -30,7 +30,7 @@ internal class Program {
    /// <summary>This class implements a custom list using arrays as the underlying data structure.</summary>
    class MyList<T> {
       #region Constructor --------------------------------------------
-      // Constructor to allocate the initial array
+      /// <summary>Constructor to allocate the initial array</summary>
       public MyList () {
          mArray = new T[4];
          mCount = 0;
@@ -38,13 +38,13 @@ internal class Program {
       #endregion
 
       #region Properties ---------------------------------------------
-      // Gets the current capacity of the underlying array
+      /// <summary>Gets the current capacity of the underlying array</summary>
       public int Capacity => mArray.Length;
 
-      // Gets the number of elements in the list
+      /// <summary>Gets the number of elements in the list</summary>
       public int Count => mCount;
 
-      // Indexer to get or set elements at a specific index
+      /// <summary>Indexer to get or set elements at a specific index</summary>
       public T this[int index] {
          get {
             ValidateIndex (index);
@@ -97,7 +97,9 @@ internal class Program {
       /// <summary>Removes the element at the specified index</summary>
       public void RemoveAt (int index) {
          ValidateIndex (index);
-         for (int i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
+         int i;
+         for (i = index; i < mCount - 1; i++) mArray[i] = mArray[i + 1];
+         mArray[i] = default!;
          mCount--;
       }
       #endregion
