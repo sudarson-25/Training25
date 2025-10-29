@@ -3,11 +3,30 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Excel column name generator
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
-      Console.WriteLine ("Hello, World!");
+   static void Main () {
+      int colNum;
+      while (true) {
+         Write ("Enter a column number: ");
+         if (int.TryParse (ReadLine (), out colNum) && colNum > 0 && colNum <= 16384) break;
+         WriteLine ("Invalid input");
+      }
+      WriteLine ("Column name: " + GetColumnName (colNum));
+   }
+
+   static string GetColumnName (int colNum) {
+      string colName = "";
+      while (colNum > 0) {
+         colNum--;
+         int rem = colNum % 26;
+         colName = (char)('A' + rem) + colName;
+         colNum /= 26;
+      }
+      return colName;
    }
 }
