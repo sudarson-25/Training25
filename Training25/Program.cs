@@ -18,15 +18,21 @@ internal class Program {
             WriteLine ("Invalid input!"); continue;
          }
          var (winner, max) = GetWinner (input);
-         WriteLine ($"{char.ToUpper (winner)}, {max}\nPress 'Y' to continue");
+         WriteLine ($"{winner}, {max}\nPress 'Y' to continue");
          if (ReadKey (true).Key is not ConsoleKey.Y) break;
       }
    }
 
    // Returns the winner of the voting contest and the number of votes
    static (char, int) GetWinner (string input) {
-      input = input.ToLower ();
-      var contestants = input.GroupBy (ch => ch).Select (g => (ch: g.Key, count: g.Count ()));
-      return contestants.OrderByDescending (entry => entry.count).First ();
+      input = input.ToUpper ();
+      Dictionary<char, int> results = [];
+      char winner = '\0';
+      int max = 0;
+      foreach (char contestant in input) {
+         if (!results.TryAdd (contestant, 1)) results[contestant]++;
+         if (results[contestant] > max) (winner, max) = (contestant, results[contestant]);
+      }
+      return (winner, max);
    }
 }
